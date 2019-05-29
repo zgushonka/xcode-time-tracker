@@ -3,21 +3,27 @@
 import sys,time,os
 from os.path import expanduser
 
-seconds = int(round(time.time()))
+workspace_name = os.environ.get("XcodeWorkspace", "No workspace")
+filename = "~/.timecheck/start_time" + "_" + workspace_name
+
 line = ""
-with open (expanduser("~/.timecheck/end_time"), 'w') as f: f.write (str(seconds))
-with open (expanduser("~/.timecheck/start_time"), 'r') as f: line = f.readline()
+with open (expanduser(filename), 'r') as f: line = f.readline()
 start_time = int(line)
-diff = seconds - start_time
+end_time = int(round(time.time()))
+diff = end_time - start_time
 
+workspace_name = os.environ.get("XcodeWorkspace", "No workspace")
+# project_name = os.environ.get("XcodeProjectName", "No project")
 activity = os.environ.get("IDEAlertMessage", "No message")
-project_name = os.environ.get("XcodeWorkspace", "No workspace")
-workspace_name = os.environ.get("XcodeProject", "No project")
-#user_name = os.environ.get("USER", "No user")
+user_name = os.environ.get("USER", "No user")
 
-print "It took " + str(diff) + " seconds to [" + activity + "] for " + project_name
+def shell(command):
+	return os.popen(command).read()
 
-with open (expanduser("~/.timecheck/results"), 'a') as f: 
-	f.write(workspace_name + "," + project_name + ","+ str(start_time) + "," +  str(seconds) + "," + activity + "," + str(diff) + "\n")
+model = shell('sysctl -n hw.model').replace(',', '_').replace('\n', '')
+cpu_model = shell('sysctl -n machdep.cpu.brand_string').replace('\n', '')
 
-# Upload th results somewhere	
+with open (expanduser("~/.timecheck/results"), 'a') as f:
+	f.write(workspace_name + "," + user_name + "," + str(start_time) + "," +  str(end_time) + "," + str(diff) + "," + activity + "," + cpu_model + "," + model + "\n")
+
+# Upload the results somewhere
