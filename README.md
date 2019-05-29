@@ -14,16 +14,16 @@ No project,TimeTracker.xcworkspace,1497877067,1497877088,Build Succeeded,21
 ```
 
 # Installation
-There'are two installation steps: 
+There'are two installation steps:
 1) Place scripts to `~/.timecheck` directory
 2) Setup Xcode behaviours to run those scripts on every run
 
 ## Scripts installation
-Simply run 
+Simply run
 ```
 CURRENT=`pwd`
 cd `mktemp -d`
-git clone https://github.com/PaulTaykalo/xcode-time-tracker
+git clone https://github.com/zgushonka/xcode-time-tracker
 cd xcode-time-tracker
 sh ./install.sh
 cd ..
@@ -57,4 +57,3 @@ The next step is to visualize this information.
 I used [R](https://www.r-project.org/about.html) language for that. But there's more coming
 This how it can look like if you'll be able to setup R correcly :)
 ![Visualization](https://github.com/PaulTaykalo/xcode-time-tracker/blob/images/images/stats_visualized.png?raw=true)
-
