@@ -24,7 +24,8 @@ model = shell('sysctl -n hw.model').replace(',', '_').replace('\n', '')
 cpu_model = shell('sysctl -n machdep.cpu.brand_string').replace('\n', '')
 
 xcode_directory = os.environ.get("XcodeDeveloperDirectory")
-xcode_version = shell(xcode_directory + "/usr/bin/xcodebuild -version").replace('\n', ' ')
+full_xcode_version = shell(xcode_directory + "/usr/bin/xcodebuild -version").replace('\n', ' ')
+xcode_version = full_xcode_version.split()[1]
 
 macos_version = shell("defaults read loginwindow SystemVersionStampAsString").replace('\n', '')
 
